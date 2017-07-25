@@ -14,6 +14,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var contactsTableView: UITableView!
     
     var contacts: [NSManagedObject] = []
+    var selectedContact: NSManagedObject?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,33 +27,19 @@ class ViewController: UIViewController {
         let voucherCellXib = UINib(nibName: "ContactTableViewCell", bundle: nil)
         contactsTableView.register(voucherCellXib, forCellReuseIdentifier: "ContactCell")
         
-        
-        //getJsonData()
-        
+        //deleteAllRecords()
     }
     
     func getJsonData() {
         
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
         
-        // 1
-        let managedContext =
-            appDelegate.persistentContainer.viewContext
+        let managedContext = appDelegate.persistentContainer.viewContext
         
-        // 2
         let entity = NSEntityDescription.entity(forEntityName: "Contact", in: managedContext)!
-        
-        
-        
-        
-        
-        // 4
-       
-        
-        
+
         let dataURL = URL(string: "https://jsonplaceholder.typicode.com/users")
         let task = URLSession.shared.dataTask(with: dataURL!) { (data, response, error) in
             if error != nil {
@@ -62,25 +49,30 @@ class ViewController: UIViewController {
                     do {
                         let jsonData = try JSONSerialization.jsonObject(with: content, options: .mutableContainers) as AnyObject
                         if let jsonArray = jsonData as? Array<AnyObject> {
-                            //print(jsonArray)
                             
                             for element in jsonArray {
-                                print(element)
                                 
                                 let contact = NSManagedObject(entity: entity, insertInto: managedContext)
                                 
                                 if let name = element.value(forKey: "name") {
                                     print("Save name - \(name)")
-                                    // 3
                                     contact.setValue(name, forKeyPath: "name")
-                                    
-                                    do {
-                                        try managedContext.save()
-                                        self.contacts.append(contact)
-                                    } catch let error as NSError {
-                                        print("Could not save. \(error), \(error.userInfo)")
-                                    }
                                 }
+                                
+                                if let email = element.value(forKey: "email") {
+                                    contact.setValue(email, forKeyPath: "email")
+                                }
+                                
+                                do {
+                                    try managedContext.save()
+                                    self.contacts.append(contact)
+                                } catch let error as NSError {
+                                    print("Could not save. \(error), \(error.userInfo)")
+                                }
+                            }
+                            
+                            DispatchQueue.main.async() {
+                                self.contactsTableView.reloadData()
                             }
                             
                         }
@@ -98,8 +90,6 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        print("view will appear")
-        
         //1
         guard let appDelegate =
             UIApplication.shared.delegate as? AppDelegate else {
@@ -116,24 +106,27 @@ class ViewController: UIViewController {
         //3
         do {
             contacts = try managedContext.fetch(fetchRequest)
-            contactsTableView.reloadData()
+            if contacts.count == 0 {
+                print("Contacts are empty. Getting JSON Data")
+                getJsonData()
+            } else {
+                contactsTableView.reloadData()
+            }
+            
         } catch let error as NSError {
             print("Could not fetch. \(error), \(error.userInfo)")
         }
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "EditContactSegue" {
-            //let destination = segue.destination as! EditContactViewController
-            //destination.detailView = .new
-            print("Preparing segue for EditContactSegue")
-        }
         
         switch segue.identifier! {
         case "EditContactSegue":
             print("Preparing segue for EditContactSegue")
         case "ContactDetailSegue":
             print("Preparing segue for EditContactSegue")
+            let destVC = segue.destination as! ContactDetailViewController
+            destVC.contact = selectedContact
         default:
             print("Preparing segue for default")
         }
@@ -155,6 +148,7 @@ class ViewController: UIViewController {
         do {
             try context.execute(deleteRequest)
             try context.save()
+            print("Deleted Contact Records")
         } catch {
             print ("There was an error")
         }
@@ -162,8 +156,14 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 80
+    }
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print("Selected row at \(indexPath.row)")
+        selectedContact = contacts[indexPath.row]
         contactsTableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "ContactDetailSegue", sender: nil)
     }

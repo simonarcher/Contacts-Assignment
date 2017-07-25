@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 enum DetailView {
     case new
@@ -23,12 +24,18 @@ class ContactDetailViewController: UIViewController {
     
     var detailTableView: ContactDetailTableViewController?
     
+    var contact: NSManagedObject!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
         
-         detailTableView?.contactNameLabel.text = "Simon"
+        if let name = contact.value(forKeyPath: "name") as? String {
+            detailTableView?.contactNameLabel.text = name
+        }
+        
+        
         
         switch detailView {
         case .new:
