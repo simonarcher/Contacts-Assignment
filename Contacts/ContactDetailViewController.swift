@@ -19,7 +19,7 @@ class ContactDetailViewController: UIViewController {
     @IBOutlet weak var contactImageView: UIImageView!
     @IBOutlet weak var detailContainerView: UIView!
     
-    var detailView: DetailView!
+    var detailView: DetailView = .view
     
     var detailTableView: ContactDetailTableViewController?
     
@@ -30,7 +30,7 @@ class ContactDetailViewController: UIViewController {
         
          detailTableView?.contactNameLabel.text = "Simon"
         
-        switch detailView! {
+        switch detailView {
         case .new:
             print("New View")
         case .edit:

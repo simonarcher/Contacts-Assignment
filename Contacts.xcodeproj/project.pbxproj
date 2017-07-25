@@ -17,6 +17,8 @@
 		631EC1FA1F27BA67000B3DFA /* ContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 631EC1F91F27BA67000B3DFA /* ContactTableViewCell.xib */; };
 		631EC1FE1F27CFE9000B3DFA /* ContactDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EC1FD1F27CFE9000B3DFA /* ContactDetailViewController.swift */; };
 		631EC2001F27D1EB000B3DFA /* ContactDetailTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631EC1FF1F27D1EB000B3DFA /* ContactDetailTableViewController.swift */; };
+		63536C541F27D9F2009BF47A /* EditContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63536C531F27D9F2009BF47A /* EditContactViewController.swift */; };
+		63536C561F27DC91009BF47A /* EditContactTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63536C551F27DC91009BF47A /* EditContactTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +34,8 @@
 		631EC1F91F27BA67000B3DFA /* ContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ContactTableViewCell.xib; sourceTree = "<group>"; };
 		631EC1FD1F27CFE9000B3DFA /* ContactDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailViewController.swift; sourceTree = "<group>"; };
 		631EC1FF1F27D1EB000B3DFA /* ContactDetailTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactDetailTableViewController.swift; sourceTree = "<group>"; };
+		63536C531F27D9F2009BF47A /* EditContactViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactViewController.swift; sourceTree = "<group>"; };
+		63536C551F27DC91009BF47A /* EditContactTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditContactTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +85,8 @@
 				631EC1F71F27B670000B3DFA /* ContactTableViewCell.swift */,
 				631EC1FD1F27CFE9000B3DFA /* ContactDetailViewController.swift */,
 				631EC1FF1F27D1EB000B3DFA /* ContactDetailTableViewController.swift */,
+				63536C531F27D9F2009BF47A /* EditContactViewController.swift */,
+				63536C551F27DC91009BF47A /* EditContactTableViewController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -169,8 +175,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				63536C561F27DC91009BF47A /* EditContactTableViewController.swift in Sources */,
 				631EC1E11F27AD7A000B3DFA /* ViewController.swift in Sources */,
 				631EC1F81F27B670000B3DFA /* ContactTableViewCell.swift in Sources */,
+				63536C541F27D9F2009BF47A /* EditContactViewController.swift in Sources */,
 				631EC1DF1F27AD7A000B3DFA /* AppDelegate.swift in Sources */,
 				631EC2001F27D1EB000B3DFA /* ContactDetailTableViewController.swift in Sources */,
 				631EC1FE1F27CFE9000B3DFA /* ContactDetailViewController.swift in Sources */,
@@ -340,6 +348,7 @@
 				631EC1F21F27AD7A000B3DFA /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
