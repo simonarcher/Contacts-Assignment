@@ -8,6 +8,7 @@
 
 import UIKit
 import CoreData
+import MessageUI
 
 class ViewController: UIViewController {
 
@@ -59,8 +60,44 @@ class ViewController: UIViewController {
                                     contact.setValue(name, forKeyPath: "name")
                                 }
                                 
+                                if let username = element.value(forKey: "username") {
+                                    contact.setValue(username, forKeyPath: "username")
+                                }
+                                
+                                if let phone = element.value(forKey: "phone") {
+                                    contact.setValue(phone, forKeyPath: "phone")
+                                }
+                                
                                 if let email = element.value(forKey: "email") {
                                     contact.setValue(email, forKeyPath: "email")
+                                }
+                                
+                                if let website = element.value(forKey: "website") {
+                                    contact.setValue(website, forKeyPath: "website")
+                                }
+                                
+                                if let company = element.value(forKey: "company") {
+                                    if let companyName = (company as AnyObject).value(forKey: "name") {
+                                        contact.setValue(companyName, forKeyPath: "companyName")
+                                    }
+                                }
+                                
+                                if let address = element.value(forKey: "address") {
+                                    if let street = (address as AnyObject).value(forKey: "street") {
+                                        contact.setValue(street, forKeyPath: "street")
+                                    }
+                                    
+                                    if let suite = (address as AnyObject).value(forKey: "suite") {
+                                        contact.setValue(suite, forKeyPath: "suite")
+                                    }
+                                    
+                                    if let city = (address as AnyObject).value(forKey: "city") {
+                                        contact.setValue(city, forKeyPath: "city")
+                                    }
+                                    
+                                    if let zipcode = (address as AnyObject).value(forKey: "zipcode") {
+                                        contact.setValue(zipcode, forKeyPath: "zipcode")
+                                    }
                                 }
                                 
                                 do {
@@ -70,6 +107,10 @@ class ViewController: UIViewController {
                                     print("Could not save. \(error), \(error.userInfo)")
                                 }
                             }
+                            
+                            self.contacts.sort(by: { (contact1, contact2) -> Bool in
+                                contact2.value(forKey: "name") as! String > contact1.value(forKey: "name") as! String
+                            })
                             
                             DispatchQueue.main.async() {
                                 self.contactsTableView.reloadData()
@@ -90,26 +131,23 @@ class ViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        //1
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
         
-        let managedContext =
-            appDelegate.persistentContainer.viewContext
+        let managedContext = appDelegate.persistentContainer.viewContext
         
-        //2
-        let fetchRequest =
-            NSFetchRequest<NSManagedObject>(entityName: "Contact")
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Contact")
         
-        //3
         do {
             contacts = try managedContext.fetch(fetchRequest)
             if contacts.count == 0 {
                 print("Contacts are empty. Getting JSON Data")
                 getJsonData()
             } else {
+                self.contacts.sort(by: { (contact1, contact2) -> Bool in
+                    contact2.value(forKey: "name") as! String > contact1.value(forKey: "name") as! String
+                })
                 contactsTableView.reloadData()
             }
             
@@ -179,8 +217,16 @@ extension ViewController: UITableViewDataSource {
         let contact = contacts[indexPath.row]
         cell.nameLabel.text = contact.value(forKeyPath: "name") as? String
         
+        if let email = contact.value(forKey: "email") as? String {
+            cell.emailLabel.text = email
+        } else {
+            cell.emailLabel.text = ""
+        }
+        
         if let imageData = contact.value(forKeyPath: "image") as? NSData {
             cell.userImageView?.image = UIImage(data: imageData as Data)
+        } else {
+            cell.userImageView.image = #imageLiteral(resourceName: "UserImagePlaceholder")
         }
         
         cell.userImageView.layer.cornerRadius = cell.userImageView.frame.size.width / 2
@@ -188,8 +234,29 @@ extension ViewController: UITableViewDataSource {
         cell.userImageView.layer.borderColor = UIColor.white.cgColor
         cell.userImageView.layer.borderWidth = 2.0
         
-        
+        cell.delegate = self
         
         return cell
+    }
+}
+
+extension ViewController: ContactTableViewCellDelegate {
+    func sendEmail(email: String) {
+        if MFMailComposeViewController.canSendMail() {
+            let mail = MFMailComposeViewController()
+            mail.mailComposeDelegate = self
+            mail.setToRecipients([email])
+            mail.setSubject("Email from Contacts App")
+            mail.setMessageBody("<p>This is an email from the Contacts app!</p>", isHTML: true)
+            present(mail, animated: true)
+        } else {
+            // show failure alert
+        }
+    }
+}
+
+extension ViewController: MFMailComposeViewControllerDelegate {
+    func mailComposeController(_ controller: MFMailComposeViewController, didFinishWith result: MFMailComposeResult, error: Error?) {
+        controller.dismiss(animated: true)
     }
 }
