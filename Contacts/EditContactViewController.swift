@@ -22,6 +22,10 @@ class EditContactViewController: UIViewController {
 
         editTableView?.nameTextField.becomeFirstResponder()
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+    }
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "EditContactTableViewSegue" {
@@ -50,43 +54,27 @@ class EditContactViewController: UIViewController {
             print("Save name - \(name)")
             contact.setValue(name, forKeyPath: "name")
         }
-        if let username = editTableView?.usernameTextField.text {
-            print("Save username - \(username)")
-            contact.setValue(username, forKeyPath: "username")
-        }
+        
         if let email = editTableView?.emailTextField.text {
             print("Save email - \(email)")
             contact.setValue(email, forKeyPath: "email")
         }
+        
         if let phone = editTableView?.phoneTextField.text {
             print("Save phone - \(phone)")
             contact.setValue(phone, forKeyPath: "phone")
         }
-        if let website = editTableView?.websiteTextField.text {
-            print("Save website - \(website)")
-            contact.setValue(website, forKeyPath: "website")
+        
+        if let colour = editTableView?.colourTextField.text {
+            contact.setValue(colour, forKeyPath: "colour")
         }
         
-        if let companyName = editTableView?.companyNameTextField.text {
-            print("Save companyName - \(companyName)")
-            contact.setValue(companyName, forKeyPath: "companyName")
-        }
-        
-        if let street = editTableView?.streetTextField.text {
-            print("Save street - \(street)")
-            contact.setValue(street, forKeyPath: "street")
-        }
-        if let suite = editTableView?.suiteTextField.text {
-            print("Save suite - \(suite)")
-            contact.setValue(suite, forKeyPath: "suite")
-        }
-        if let city = editTableView?.cityTextField.text {
-            print("Save city - \(city)")
-            contact.setValue(city, forKeyPath: "city")
-        }
-        if let zipcode = editTableView?.zipcodeTextField.text {
-            print("Save zipcode - \(zipcode)")
-            contact.setValue(zipcode, forKeyPath: "zipcode")
+        if let image = editTableView?.contactImageView.image {
+            let thumbnail = image.scale(toSize: self.view.frame.size)
+            
+            if let thumbnailData  = UIImageJPEGRepresentation(thumbnail, 0.7) {
+                contact.setValue(thumbnailData, forKeyPath: "image")
+            }
         }
         
         do {

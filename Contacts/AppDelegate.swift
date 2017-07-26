@@ -9,6 +9,8 @@
 import UIKit
 import CoreData
 
+let colours = ["Black", "Red", "Green", "Purple", "Blue"]
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

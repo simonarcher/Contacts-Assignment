@@ -60,44 +60,12 @@ class ViewController: UIViewController {
                                     contact.setValue(name, forKeyPath: "name")
                                 }
                                 
-                                if let username = element.value(forKey: "username") {
-                                    contact.setValue(username, forKeyPath: "username")
-                                }
-                                
                                 if let phone = element.value(forKey: "phone") {
                                     contact.setValue(phone, forKeyPath: "phone")
                                 }
                                 
                                 if let email = element.value(forKey: "email") {
                                     contact.setValue(email, forKeyPath: "email")
-                                }
-                                
-                                if let website = element.value(forKey: "website") {
-                                    contact.setValue(website, forKeyPath: "website")
-                                }
-                                
-                                if let company = element.value(forKey: "company") {
-                                    if let companyName = (company as AnyObject).value(forKey: "name") {
-                                        contact.setValue(companyName, forKeyPath: "companyName")
-                                    }
-                                }
-                                
-                                if let address = element.value(forKey: "address") {
-                                    if let street = (address as AnyObject).value(forKey: "street") {
-                                        contact.setValue(street, forKeyPath: "street")
-                                    }
-                                    
-                                    if let suite = (address as AnyObject).value(forKey: "suite") {
-                                        contact.setValue(suite, forKeyPath: "suite")
-                                    }
-                                    
-                                    if let city = (address as AnyObject).value(forKey: "city") {
-                                        contact.setValue(city, forKeyPath: "city")
-                                    }
-                                    
-                                    if let zipcode = (address as AnyObject).value(forKey: "zipcode") {
-                                        contact.setValue(zipcode, forKeyPath: "zipcode")
-                                    }
                                 }
                                 
                                 do {
@@ -130,6 +98,8 @@ class ViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
@@ -229,10 +199,7 @@ extension ViewController: UITableViewDataSource {
             cell.userImageView.image = #imageLiteral(resourceName: "UserImagePlaceholder")
         }
         
-        cell.userImageView.layer.cornerRadius = cell.userImageView.frame.size.width / 2
-        cell.userImageView.clipsToBounds = true
-        cell.userImageView.layer.borderColor = UIColor.white.cgColor
-        cell.userImageView.layer.borderWidth = 2.0
+        cell.userImageView.applyRoundedEdges()
         
         cell.delegate = self
         

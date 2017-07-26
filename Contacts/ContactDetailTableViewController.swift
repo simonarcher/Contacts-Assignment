@@ -15,17 +15,11 @@ protocol ContactDetailTableViewControllerDelegate {
 class ContactDetailTableViewController: UITableViewController {
 
     @IBOutlet weak var contactNameLabel: UITextField!
-    @IBOutlet weak var contactUsernameLabel: UITextField!
     @IBOutlet weak var contactEmailLabel: UITextField!
     @IBOutlet weak var contactPhoneLabel: UITextField!
-    @IBOutlet weak var contactWebsiteLabel: UITextField!
+    @IBOutlet weak var colourTextField: UITextField!
     
-    @IBOutlet weak var streetLabel: UITextField!
-    @IBOutlet weak var suiteLabel: UITextField!
-    @IBOutlet weak var cityLabel: UITextField!
-    @IBOutlet weak var zipcodeLabel: UITextField!
-    
-    @IBOutlet weak var companyLabel: UITextField!
+    let colourPicker = UIPickerView()
     
     var delegate: ContactDetailTableViewControllerDelegate?
     
@@ -33,6 +27,12 @@ class ContactDetailTableViewController: UITableViewController {
         super.viewDidLoad()
         
         self.tableView.tableFooterView = UIView()
+        
+        colourTextField.inputView = colourPicker
+        colourPicker.dataSource = self
+        colourPicker.delegate = self
+        
+        colourTextField.tintColor = UIColor.clear
     }
     
     @IBAction func deleteButtonTapped(_ sender: UIButton) {
@@ -40,4 +40,26 @@ class ContactDetailTableViewController: UITableViewController {
         delegate?.deleteContact()
     }
     
+}
+
+extension ContactDetailTableViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return colours.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        return colours[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        
+        colourTextField.text = colours[row]
+        colourTextField.setColour()
+        
+        colourTextField.tintColor = UIColor.clear
+    }
 }
