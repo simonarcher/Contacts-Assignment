@@ -9,7 +9,7 @@
 import UIKit
 import CoreData
 
-let colours = ["Black", "Red", "Green", "Purple", "Blue"]
+let colours = ["Black", "Red", "Green", "Purple", "Blue", "Orange", "Yellow"]
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

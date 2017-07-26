@@ -28,10 +28,11 @@ class ContactDetailTableViewController: UITableViewController {
         
         self.tableView.tableFooterView = UIView()
         
-        colourTextField.inputView = colourPicker
+        colourPicker.backgroundColor = UIColor.white
         colourPicker.dataSource = self
         colourPicker.delegate = self
         
+        colourTextField.inputView = colourPicker
         colourTextField.tintColor = UIColor.clear
     }
     
@@ -54,6 +55,27 @@ extension ContactDetailTableViewController: UIPickerViewDelegate, UIPickerViewDa
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return colours.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let titleData = colours[row]
+        
+        switch titleData {
+        case "Red":
+            return NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.red])
+        case "Blue":
+            return NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.blue])
+        case "Green":
+            return NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.green])
+        case "Purple":
+            return NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.purple])
+        case "Orange":
+            return NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.orange])
+        case "Yellow":
+            return NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.yellow])
+        default:
+            return NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.black])
+        }
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {

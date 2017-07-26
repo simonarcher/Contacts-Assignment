@@ -22,6 +22,10 @@ extension UITextField {
                 self.textColor = UIColor.blue
             case "Purple":
                 self.textColor = UIColor.purple
+            case "Orange":
+                self.textColor = UIColor.orange
+            case "Yellow":
+                self.textColor = UIColor.yellow
             default:
                 self.textColor = UIColor.black
             }
