@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol ContactDetailTableViewControllerDelegate {
+    func deleteContact()
+}
+
 class ContactDetailTableViewController: UITableViewController {
 
     @IBOutlet weak var contactNameLabel: UITextField!
@@ -23,6 +27,8 @@ class ContactDetailTableViewController: UITableViewController {
     
     @IBOutlet weak var companyLabel: UITextField!
     
+    var delegate: ContactDetailTableViewControllerDelegate?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,6 +37,7 @@ class ContactDetailTableViewController: UITableViewController {
     
     @IBAction func deleteButtonTapped(_ sender: UIButton) {
         print("deleteButtonTapped")
+        delegate?.deleteContact()
     }
     
 }

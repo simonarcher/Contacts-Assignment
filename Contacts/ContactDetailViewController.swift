@@ -86,6 +86,8 @@ class ContactDetailViewController: UIViewController {
             print("View View")
             self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveTapped))
         }
+        
+        detailTableView?.delegate = self
     }
     
     func saveTapped() {
@@ -236,5 +238,27 @@ extension UIImage {
         UIGraphicsEndImageContext()
         
         return newImage
+    }
+}
+
+extension ContactDetailViewController: ContactDetailTableViewControllerDelegate {
+    func deleteContact() {
+        print("delete contact")
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        managedContext.delete(contact)
+        
+        do {
+            try managedContext.save()
+            managedContext.refreshAllObjects()
+            self.navigationController?.popViewController(animated: true)
+        } catch {
+            fatalError("Failure to save context: \(error)")
+        }
     }
 }
