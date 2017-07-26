@@ -20,8 +20,6 @@ class EditContactViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
-        
         editTableView?.nameTextField.becomeFirstResponder()
     }
 
@@ -38,29 +36,59 @@ class EditContactViewController: UIViewController {
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
         print("Save data")
         
-        guard let appDelegate =
-            UIApplication.shared.delegate as? AppDelegate else {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
                 return
         }
         
-        // 1
-        let managedContext =
-            appDelegate.persistentContainer.viewContext
+        let managedContext = appDelegate.persistentContainer.viewContext
         
-        // 2
         let entity = NSEntityDescription.entity(forEntityName: "Contact", in: managedContext)!
         
         let contact = NSManagedObject(entity: entity, insertInto: managedContext)
         
         if let name = editTableView?.nameTextField.text {
             print("Save name - \(name)")
-            // 3
             contact.setValue(name, forKeyPath: "name")
         }
+        if let username = editTableView?.usernameTextField.text {
+            print("Save username - \(username)")
+            contact.setValue(username, forKeyPath: "username")
+        }
+        if let email = editTableView?.emailTextField.text {
+            print("Save email - \(email)")
+            contact.setValue(email, forKeyPath: "email")
+        }
+        if let phone = editTableView?.phoneTextField.text {
+            print("Save phone - \(phone)")
+            contact.setValue(phone, forKeyPath: "phone")
+        }
+        if let website = editTableView?.websiteTextField.text {
+            print("Save website - \(website)")
+            contact.setValue(website, forKeyPath: "website")
+        }
         
+        if let companyName = editTableView?.companyNameTextField.text {
+            print("Save companyName - \(companyName)")
+            contact.setValue(companyName, forKeyPath: "companyName")
+        }
         
+        if let street = editTableView?.streetTextField.text {
+            print("Save street - \(street)")
+            contact.setValue(street, forKeyPath: "street")
+        }
+        if let suite = editTableView?.suiteTextField.text {
+            print("Save suite - \(suite)")
+            contact.setValue(suite, forKeyPath: "suite")
+        }
+        if let city = editTableView?.cityTextField.text {
+            print("Save city - \(city)")
+            contact.setValue(city, forKeyPath: "city")
+        }
+        if let zipcode = editTableView?.zipcodeTextField.text {
+            print("Save zipcode - \(zipcode)")
+            contact.setValue(zipcode, forKeyPath: "zipcode")
+        }
         
-        // 4
         do {
             try managedContext.save()
             contacts.append(contact)
@@ -68,8 +96,6 @@ class EditContactViewController: UIViewController {
             print("Could not save. \(error), \(error.userInfo)")
         }
         
-        
         self.dismiss(animated: true, completion: nil)
     }
-
 }

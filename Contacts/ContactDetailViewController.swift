@@ -34,7 +34,35 @@ class ContactDetailViewController: UIViewController {
         if let name = contact.value(forKeyPath: "name") as? String {
             detailTableView?.contactNameLabel.text = name
         }
+        if let username = contact.value(forKeyPath: "username") as? String {
+            detailTableView?.contactUsernameLabel.text = username
+        }
+        if let email = contact.value(forKeyPath: "email") as? String {
+            detailTableView?.contactEmailLabel.text = email
+        }
+        if let phone = contact.value(forKeyPath: "phone") as? String {
+            detailTableView?.contactPhoneLabel.text = phone
+        }
+        if let website = contact.value(forKeyPath: "website") as? String {
+            detailTableView?.contactWebsiteLabel.text = website
+        }
         
+        if let street = contact.value(forKeyPath: "street") as? String {
+            detailTableView?.streetLabel.text = street
+        }
+        if let suite = contact.value(forKeyPath: "suite") as? String {
+            detailTableView?.suiteLabel.text = suite
+        }
+        if let city = contact.value(forKeyPath: "city") as? String {
+            detailTableView?.cityLabel.text = city
+        }
+        if let zipcode = contact.value(forKeyPath: "zipcode") as? String {
+            detailTableView?.zipcodeLabel.text = zipcode
+        }
+        
+        if let companyName = contact.value(forKeyPath: "companyName") as? String {
+            detailTableView?.companyLabel.text = companyName
+        }
         
         
         switch detailView {
@@ -50,6 +78,7 @@ class ContactDetailViewController: UIViewController {
     
     func editTapped() {
         print("editTapped")
+        performSegue(withIdentifier: "EditContactSegue", sender: nil)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
