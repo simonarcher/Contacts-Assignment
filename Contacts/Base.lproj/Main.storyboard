@@ -108,7 +108,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="V3X-PT-ZCO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1777" y="-503"/>
+            <point key="canvasLocation" x="1767" y="-520"/>
         </scene>
         <!--Main View Controller-->
         <scene sceneID="Qqw-sO-coI">
@@ -169,7 +169,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b0Q-l9-Rnu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="133.59999999999999" y="119.1904047976012"/>
+            <point key="canvasLocation" x="-174" y="-520"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="OPA-1m-JoY">
@@ -187,7 +187,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="OzJ-hg-El5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-255" y="-537"/>
+            <point key="canvasLocation" x="-1014" y="-522"/>
         </scene>
         <!--Contact Detail Table View Controller-->
         <scene sceneID="TTM-B4-PhU">
@@ -300,7 +300,7 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bsk-An-TQ2">
+                                                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Black" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bsk-An-TQ2">
                                                     <rect key="frame" x="75" y="13.5" width="284" height="17"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
@@ -360,7 +360,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GbL-b5-LCn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2509.5999999999999" y="-503.29835082458777"/>
+            <point key="canvasLocation" x="2510" y="-520"/>
         </scene>
         <!--Edit Contact-->
         <scene sceneID="oxn-mO-Fjm">
@@ -379,7 +379,7 @@
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="barTintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <items>
-                                    <navigationItem title="Contact" id="7Hj-XS-sGi">
+                                    <navigationItem title="Add Contact" id="7Hj-XS-sGi">
                                         <barButtonItem key="leftBarButtonItem" systemItem="stop" id="sVT-Pb-ppQ">
                                             <connections>
                                                 <action selector="cancelButtonTapped:" destination="cdk-Ak-ODT" id="je5-30-hdk"/>
@@ -417,7 +417,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KcZ-bQ-Pe3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1738" y="242"/>
+            <point key="canvasLocation" x="825" y="242"/>
         </scene>
         <!--Edit Contact Table View Controller-->
         <scene sceneID="JUJ-cp-0cn">
@@ -557,7 +557,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8tm-zm-Nbn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2514.4000000000001" y="212.74362818590706"/>
+            <point key="canvasLocation" x="1766" y="242"/>
         </scene>
     </scenes>
     <resources>
@@ -565,7 +565,7 @@
         <image name="UserImagePlaceholder" width="210" height="210"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Fia-KX-cSy"/>
+        <segue reference="ePg-2B-Jzm"/>
     </inferredMetricsTieBreakers>
     <color key="tintColor" red="0.9436371922492981" green="0.21549683809280396" blue="0.047982946038246155" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
 </document>

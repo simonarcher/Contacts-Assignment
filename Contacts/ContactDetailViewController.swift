@@ -25,6 +25,7 @@ class ContactDetailViewController: UIViewController {
         
         if let name = contact.value(forKeyPath: "name") as? String {
             detailTableView?.contactNameLabel.text = name
+            self.title = name
         }
 
         if let email = contact.value(forKeyPath: "email") as? String {
@@ -53,6 +54,8 @@ class ContactDetailViewController: UIViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(saveTapped))
         
         detailTableView?.delegate = self
+        
+        
     }
     
     func saveTapped() {
@@ -81,7 +84,6 @@ class ContactDetailViewController: UIViewController {
         
         do {
             try managedContext.save()
-            print("save success")
             self.navigationController?.popViewController(animated: true)
         } catch {
             fatalError("Failure to save context: \(error)")

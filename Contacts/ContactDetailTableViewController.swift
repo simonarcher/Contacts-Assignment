@@ -36,10 +36,15 @@ class ContactDetailTableViewController: UITableViewController {
     }
     
     @IBAction func deleteButtonTapped(_ sender: UIButton) {
-        print("deleteButtonTapped")
-        delegate?.deleteContact()
+        let alertController = UIAlertController(title: "Delete Contact", message:
+            "Are you sure you want to delete this contact?", preferredStyle: .alert)
+        alertController.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { (action) in
+            self.delegate?.deleteContact()
+        }))
+        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        self.present(alertController, animated: true, completion: nil)
     }
-    
 }
 
 extension ContactDetailTableViewController: UIPickerViewDelegate, UIPickerViewDataSource {

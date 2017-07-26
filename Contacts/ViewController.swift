@@ -31,16 +31,75 @@ class ViewController: UIViewController {
         //deleteAllRecords()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: false)
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
+            return
+        }
+        
+        let managedContext = appDelegate.persistentContainer.viewContext
+        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Contact")
+        
+        do {
+            contacts = try managedContext.fetch(fetchRequest)
+            if contacts.count == 0 {
+                print("Contacts are empty. Getting JSON Data")
+                getJsonData()
+            } else {
+                self.contacts.sort(by: { (contact1, contact2) -> Bool in
+                    contact2.value(forKey: "name") as! String > contact1.value(forKey: "name") as! String
+                })
+                contactsTableView.reloadData()
+            }
+            
+        } catch let error as NSError {
+            print("Could not fetch. \(error), \(error.userInfo)")
+        }
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        switch segue.identifier! {
+        case "ContactDetailSegue":
+            let destVC = segue.destination as! ContactDetailViewController
+            destVC.contact = selectedContact
+        default: return
+        }
+    }
+
+    @IBAction func addContactButtonPressed(_ sender: UIBarButtonItem) {
+        performSegue(withIdentifier: "EditContactSegue", sender: nil)
+    }
+
+    func deleteAllRecords() {
+        let delegate = UIApplication.shared.delegate as! AppDelegate
+        let context = delegate.persistentContainer.viewContext
+        
+        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
+        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
+        
+        do {
+            try context.execute(deleteRequest)
+            try context.save()
+            print("Deleted Contact Records")
+        } catch {
+            print ("There was an error")
+        }
+    }
+    
     func getJsonData() {
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return
+            return
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let entity = NSEntityDescription.entity(forEntityName: "Contact", in: managedContext)!
-
+        
         let dataURL = URL(string: "https://jsonplaceholder.typicode.com/users")
         let task = URLSession.shared.dataTask(with: dataURL!) { (data, response, error) in
             if error != nil {
@@ -95,72 +154,6 @@ class ViewController: UIViewController {
         
         task.resume()
     }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        self.navigationController?.setNavigationBarHidden(false, animated: false)
-        
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return
-        }
-        
-        let managedContext = appDelegate.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<NSManagedObject>(entityName: "Contact")
-        
-        do {
-            contacts = try managedContext.fetch(fetchRequest)
-            if contacts.count == 0 {
-                print("Contacts are empty. Getting JSON Data")
-                getJsonData()
-            } else {
-                self.contacts.sort(by: { (contact1, contact2) -> Bool in
-                    contact2.value(forKey: "name") as! String > contact1.value(forKey: "name") as! String
-                })
-                contactsTableView.reloadData()
-            }
-            
-        } catch let error as NSError {
-            print("Could not fetch. \(error), \(error.userInfo)")
-        }
-    }
-    
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        
-        switch segue.identifier! {
-        case "EditContactSegue":
-            print("Preparing segue for EditContactSegue")
-        case "ContactDetailSegue":
-            print("Preparing segue for EditContactSegue")
-            let destVC = segue.destination as! ContactDetailViewController
-            destVC.contact = selectedContact
-        default:
-            print("Preparing segue for default")
-        }
-    }
-
-    @IBAction func addContactButtonPressed(_ sender: UIBarButtonItem) {
-        print("addContactButtonPressed")
-        
-        performSegue(withIdentifier: "EditContactSegue", sender: nil)
-    }
-
-    func deleteAllRecords() {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let context = delegate.persistentContainer.viewContext
-        
-        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-        
-        do {
-            try context.execute(deleteRequest)
-            try context.save()
-            print("Deleted Contact Records")
-        } catch {
-            print ("There was an error")
-        }
-    }
 }
 
 extension ViewController: UITableViewDelegate {
@@ -170,7 +163,6 @@ extension ViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print("Selected row at \(indexPath.row)")
         selectedContact = contacts[indexPath.row]
         contactsTableView.deselectRow(at: indexPath, animated: true)
         performSegue(withIdentifier: "ContactDetailSegue", sender: nil)
@@ -217,7 +209,11 @@ extension ViewController: ContactTableViewCellDelegate {
             mail.setMessageBody("<p>This is an email from the Contacts app!</p>", isHTML: true)
             present(mail, animated: true)
         } else {
-            // show failure alert
+            let alertController = UIAlertController(title: "Uh oh..", message:
+                "We couldn't access your mail account at this time. Check your mail settings, and try again.", preferredStyle: .alert)
+            alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            
+            self.present(alertController, animated: true, completion: nil)
         }
     }
 }
