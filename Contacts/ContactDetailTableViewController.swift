@@ -11,21 +11,26 @@ import UIKit
 class ContactDetailTableViewController: UITableViewController {
 
     @IBOutlet weak var contactNameLabel: UITextField!
-    @IBOutlet weak var contactUsernameLabel: UILabel!
-    @IBOutlet weak var contactEmailLabel: UILabel!
-    @IBOutlet weak var contactPhoneLabel: UILabel!
-    @IBOutlet weak var contactWebsiteLabel: UILabel!
+    @IBOutlet weak var contactUsernameLabel: UITextField!
+    @IBOutlet weak var contactEmailLabel: UITextField!
+    @IBOutlet weak var contactPhoneLabel: UITextField!
+    @IBOutlet weak var contactWebsiteLabel: UITextField!
     
-    @IBOutlet weak var streetLabel: UILabel!
-    @IBOutlet weak var suiteLabel: UILabel!
-    @IBOutlet weak var cityLabel: UILabel!
-    @IBOutlet weak var zipcodeLabel: UILabel!
+    @IBOutlet weak var streetLabel: UITextField!
+    @IBOutlet weak var suiteLabel: UITextField!
+    @IBOutlet weak var cityLabel: UITextField!
+    @IBOutlet weak var zipcodeLabel: UITextField!
     
-    @IBOutlet weak var companyLabel: UILabel!
+    @IBOutlet weak var companyLabel: UITextField!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tableView.tableFooterView = UIView()
     }
+    
+    @IBAction func deleteButtonTapped(_ sender: UIButton) {
+        print("deleteButtonTapped")
+    }
+    
 }

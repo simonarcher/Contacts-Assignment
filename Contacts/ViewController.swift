@@ -178,6 +178,18 @@ extension ViewController: UITableViewDataSource {
         let cell = contactsTableView.dequeueReusableCell(withIdentifier: "ContactCell", for: indexPath) as! ContactTableViewCell
         let contact = contacts[indexPath.row]
         cell.nameLabel.text = contact.value(forKeyPath: "name") as? String
+        
+        if let imageData = contact.value(forKeyPath: "image") as? NSData {
+            cell.userImageView?.image = UIImage(data: imageData as Data)
+        }
+        
+        cell.userImageView.layer.cornerRadius = cell.userImageView.frame.size.width / 2
+        cell.userImageView.clipsToBounds = true
+        cell.userImageView.layer.borderColor = UIColor.white.cgColor
+        cell.userImageView.layer.borderWidth = 2.0
+        
+        
+        
         return cell
     }
 }
