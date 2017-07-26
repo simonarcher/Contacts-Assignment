@@ -15,8 +15,6 @@ class EditContactViewController: UIViewController {
     
     var editTableView: EditContactTableViewController?
     
-    var contacts: [NSManagedObject] = []
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -38,30 +36,25 @@ class EditContactViewController: UIViewController {
     }
 
     @IBAction func saveButtonTapped(_ sender: UIBarButtonItem) {
-        print("Save data")
         
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {
-                return
+            return
         }
         
         let managedContext = appDelegate.persistentContainer.viewContext
         
         let entity = NSEntityDescription.entity(forEntityName: "Contact", in: managedContext)!
-        
         let contact = NSManagedObject(entity: entity, insertInto: managedContext)
         
         if let name = editTableView?.nameTextField.text {
-            print("Save name - \(name)")
             contact.setValue(name, forKeyPath: "name")
         }
         
         if let email = editTableView?.emailTextField.text {
-            print("Save email - \(email)")
             contact.setValue(email, forKeyPath: "email")
         }
         
         if let phone = editTableView?.phoneTextField.text {
-            print("Save phone - \(phone)")
             contact.setValue(phone, forKeyPath: "phone")
         }
         
@@ -79,7 +72,7 @@ class EditContactViewController: UIViewController {
         
         do {
             try managedContext.save()
-            contacts.append(contact)
+            managedContext.refreshAllObjects()
         } catch let error as NSError {
             print("Could not save. \(error), \(error.userInfo)")
         }

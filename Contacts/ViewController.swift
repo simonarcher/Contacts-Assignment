@@ -181,8 +181,14 @@ extension ViewController: UITableViewDataSource {
         
         if let email = contact.value(forKey: "email") as? String {
             cell.emailLabel.text = email
+            if email == "" {
+                cell.emailButton.isHidden = true
+            } else {
+                cell.emailButton.isHidden = false
+            }
         } else {
             cell.emailLabel.text = ""
+            cell.emailButton.isHidden = true
         }
         
         if let imageData = contact.value(forKeyPath: "image") as? NSData {

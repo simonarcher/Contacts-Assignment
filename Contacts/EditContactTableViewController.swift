@@ -18,8 +18,6 @@ class EditContactTableViewController: UITableViewController {
     
     var colourPicker = UIPickerView()
     
-    let colours = ["Red", "Green", "Purple", "Blue"]
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
