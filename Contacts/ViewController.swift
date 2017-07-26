@@ -115,7 +115,6 @@ class ViewController: UIViewController {
                                 let contact = NSManagedObject(entity: entity, insertInto: managedContext)
                                 
                                 if let name = element.value(forKey: "name") {
-                                    print("Save name - \(name)")
                                     contact.setValue(name, forKeyPath: "name")
                                 }
                                 
@@ -126,6 +125,8 @@ class ViewController: UIViewController {
                                 if let email = element.value(forKey: "email") {
                                     contact.setValue(email, forKeyPath: "email")
                                 }
+                                
+                                contact.setValue("Black", forKey: "colour")
                                 
                                 do {
                                     try managedContext.save()
@@ -142,7 +143,6 @@ class ViewController: UIViewController {
                             DispatchQueue.main.async() {
                                 self.contactsTableView.reloadData()
                             }
-                            
                         }
                     }
                     catch {
