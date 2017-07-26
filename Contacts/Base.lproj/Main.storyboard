@@ -166,6 +166,9 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="Ice-Nz-4dK"/>
+                    <connections>
+                        <outlet property="footerLabel" destination="2Dk-yZ-fh3" id="6PJ-qv-v4m"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b0Q-l9-Rnu" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

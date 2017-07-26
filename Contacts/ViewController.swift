@@ -27,8 +27,6 @@ class ViewController: UIViewController {
         
         let voucherCellXib = UINib(nibName: "ContactTableViewCell", bundle: nil)
         contactsTableView.register(voucherCellXib, forCellReuseIdentifier: "ContactCell")
-        
-        //deleteAllRecords()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -72,22 +70,6 @@ class ViewController: UIViewController {
 
     @IBAction func addContactButtonPressed(_ sender: UIBarButtonItem) {
         performSegue(withIdentifier: "EditContactSegue", sender: nil)
-    }
-
-    func deleteAllRecords() {
-        let delegate = UIApplication.shared.delegate as! AppDelegate
-        let context = delegate.persistentContainer.viewContext
-        
-        let deleteFetch = NSFetchRequest<NSFetchRequestResult>(entityName: "Contact")
-        let deleteRequest = NSBatchDeleteRequest(fetchRequest: deleteFetch)
-        
-        do {
-            try context.execute(deleteRequest)
-            try context.save()
-            print("Deleted Contact Records")
-        } catch {
-            print ("There was an error")
-        }
     }
     
     func getJsonData() {
